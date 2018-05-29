@@ -1,0 +1,65 @@
+﻿
+<link rel="stylesheet" href="~/Content/bootstrap-table.css">
+<script src="~/Content/bootstrap-table.js"></script>
+
+<section class="content">
+    <table id="example" class="display" width="100%"></table>
+</section>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('#example').bootstrapTable({
+
+            ajax: function (request) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/GetOrderList",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        request.success({
+                            row: msg.rows
+                        });
+                        debugger;
+                        $('#example').bootstrapTable('load', msg.rows);
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            pagination: false,                   //是否显示分页（*）
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'ID',
+                title: '订单号'
+            }, {
+                field: 'ProductID',
+                title: '商品ID'
+            }, {
+                field: 'ProductName',
+                title: '商品名称'
+            }, {
+                field: 'UnitPrice',
+                title: '商品单价'
+            }, {
+                field: 'Count',
+                title: '下单数量'
+            }, {
+                field: 'ReceiveName',
+                title: '收货人姓名'
+            }, {
+                field: 'ReceivePhone',
+                title: '收货手机号'
+            }, {
+                field: 'ReceiveAddress',
+                title: '收货地址'
+            }, {
+                field: 'CreateTime',
+                title: '创建时间'
+            }]
+        });
+    });
+</script>

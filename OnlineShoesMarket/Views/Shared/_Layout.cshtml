@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+    <link rel="stylesheet" href="~/Content/adminlte/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/skin-blue.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <script src="~/Content/adminlte/jquery.min.js"></script>
+    <script src="~/Content/adminlte/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/adminlte.min.js"></script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        <!--顶部导航栏-->
+        <header class="main-header">
+            <!--顶部导航左部 系统图标信息-->
+            <a href="11111.html" class="logo">
+                <span class="logo-lg"><b>XXX</b>后台管理系统</span>
+            </a>
+
+            <!--顶部导航中、右部数据-->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!--隐藏左侧菜单的按钮-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> </a>
+                <!--右上侧头像名字数据-->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/Content/adminlte/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs">管理员</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header">
+                                    <img src="~/Content/adminlte/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">个人信息</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">登出</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!--左侧菜单相关信息-->
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <!--左上角头像名字信息-->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/Content/adminlte/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>管理员</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                    </div>
+                </div>
+
+                <!--左侧搜索框-->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="搜索...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+                <!--菜单信息-->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">头部</li>
+                    <li class="active"><a href="http://localhost:8001/home/index"><i class="fa fa-link"></i> <span>一级菜单01</span></a></li>
+                    <li><a href="http://localhost:8001/home/OrderList"><i class="fa fa-link"></i> <span>一级菜单02</span></a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-link"></i> <span>一级菜单03</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#">二级菜单01</a></li>
+                            <li><a href="#">二级菜单02</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </section>
+        </aside>
+
+        <!--页面主体内容-->
+        <div class="content-wrapper">
+            <section class="content-header">
+                @*<h1> 页头 <small>一些描述</small> </h1>*@
+            </section>
+
+            <!--自定义的显示内容-->
+            @RenderBody()
+            <section class="content container-fluid"></section>
+        </div>
+
+        <!--页面底部-->
+        <footer class="main-footer"></footer>
+    </div>
+</body>
+</html>

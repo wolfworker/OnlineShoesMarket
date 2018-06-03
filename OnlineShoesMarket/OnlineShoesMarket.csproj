@@ -26,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,15 +53,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -112,6 +113,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -148,9 +150,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\BackendController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,6 +170,49 @@
     <Content Include="Content\bootstrap-table.css" />
     <Content Include="Content\bootstrap-table.js" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\image\1.jpg" />
+    <Content Include="Content\image\10.jpg" />
+    <Content Include="Content\image\11.jpg" />
+    <Content Include="Content\image\12.jpg" />
+    <Content Include="Content\image\13.jpg" />
+    <Content Include="Content\image\14.jpg" />
+    <Content Include="Content\image\15.jpg" />
+    <Content Include="Content\image\16.jpg" />
+    <Content Include="Content\image\17.jpg" />
+    <Content Include="Content\image\18.jpg" />
+    <Content Include="Content\image\19.jpg" />
+    <Content Include="Content\image\2.jpg" />
+    <Content Include="Content\image\20.jpg" />
+    <Content Include="Content\image\21.jpg" />
+    <Content Include="Content\image\22.jpg" />
+    <Content Include="Content\image\23.jpg" />
+    <Content Include="Content\image\24.gif" />
+    <Content Include="Content\image\27.jpg" />
+    <Content Include="Content\image\3.jpg" />
+    <Content Include="Content\image\4.jpg" />
+    <Content Include="Content\image\5.jpg" />
+    <Content Include="Content\image\6.jpg" />
+    <Content Include="Content\image\618-bg-general.jpg" />
+    <Content Include="Content\image\7.jpg" />
+    <Content Include="Content\image\8.jpg" />
+    <Content Include="Content\image\9.jpg" />
+    <Content Include="Content\image\consultation.png" />
+    <Content Include="Content\image\coupon-icon.svg" />
+    <Content Include="Content\image\coupon_flag.png" />
+    <Content Include="Content\image\hot.png" />
+    <Content Include="Content\image\qq_service.png" />
+    <Content Include="Content\image\qrcodeIcon.png" />
+    <Content Include="Content\image\scan.png" />
+    <Content Include="Content\image\scan.svg" />
+    <Content Include="Content\image\sprite.png" />
+    <Content Include="Content\image\star.svg" />
+    <Content Include="Content\image\weixinqrcode.jpg" />
+    <Content Include="Content\jquery.min.js" />
+    <Content Include="Content\jquery.reveal.js" />
+    <Content Include="Content\mobile.css" />
+    <Content Include="Content\mobile.js" />
+    <Content Include="Content\modal-gloss.png" />
+    <Content Include="Content\reveal.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -177,6 +221,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\image\25.webp" />
+    <Content Include="Content\image\26.webp" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -193,14 +239,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\OrderList.cshtml" />
+    <Content Include="Views\Backend\OrderList.cshtml" />
+    <Content Include="Views\Order\Submit.cshtml" />
+    <Content Include="Views\Shared\_Front_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,7 +17,7 @@ namespace OnlineShoesMarket.Controllers
             return View();
         }
 
-        public JsonResult GetOrderList()
+        public JsonResult GetOrderList(OrderRequest request)
         {
             DataTable dt = new DataTable(); // 实例化数据表
             using (SqlConnection conn = new SqlConnection())
@@ -24,8 +25,39 @@ namespace OnlineShoesMarket.Controllers
                 conn.ConnectionString = ConfigurationSettings.AppSettings["connectionstring"]; ;
                 conn.Open(); // 打开数据库连接
 
-                String sql = "SELECT * FROM [SHOES].[dbo].[Order]"; // 查询语句
-                SqlDataAdapter myda = new SqlDataAdapter(sql, conn); // 实例化适配器
+                StringBuilder sql = new StringBuilder();
+                sql.Append("SELECT * FROM [SHOES].[dbo].[Order] where 1=1 "); // 查询语句
+
+                if (request != null)
+                {
+                    if (!string.IsNullOrEmpty(request.OrderNo))
+                    {
+                        sql.Append($" AND ID = '{request.OrderNo}'");
+                    }
+                    if (!string.IsNullOrEmpty(request.ReceiveName))
+                    {
+                        sql.Append($" AND ReceiveName LIKE '%{request.ReceiveName}%'");
+                    }
+                    if (!string.IsNullOrEmpty(request.ReceivePhone))
+                    {
+                        sql.Append($" AND ReceivePhone = '{request.ReceivePhone}'");
+                    }
+                    if (!string.IsNullOrEmpty(request.ProductName))
+                    {
+                        sql.Append($" AND ProductName LIKE '%{request.ProductName}%'");
+                    }
+                    if (!string.IsNullOrEmpty(request.Address))
+                    {
+                        sql.Append($" AND ReceiveAddress LIKE '%{request.Address}%'");
+                    }
+                    if (!string.IsNullOrEmpty(request.Status))
+                    {
+                        sql.Append($" AND Status = '{request.Status}'");
+                    }
+                }
+
+
+                SqlDataAdapter myda = new SqlDataAdapter(sql.ToString(), conn); // 实例化适配器
                 myda.Fill(dt); // 保存数据 
                 conn.Close(); // 关闭数据库连接
             }
@@ -110,5 +142,15 @@ namespace OnlineShoesMarket.Controllers
         public int total;
 
         public List<OrderDetail> rows;
+    }
+
+    public class OrderRequest
+    {
+        public string OrderNo { get; set; }
+        public string ReceivePhone { get; set; }
+        public string ReceiveName { get; set; }
+        public string ProductName { get; set; }
+        public string Status { get; set; }
+        public string Address { get; set; }
     }
 }

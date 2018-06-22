@@ -89,6 +89,54 @@ namespace OnlineShoesMarket.Controllers
             return Json(res, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetOrderDetail(string orderid)
+        {
+            DataTable dt = new DataTable(); // 实例化数据表
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationSettings.AppSettings["connectionstring"]; ;
+                conn.Open(); // 打开数据库连接
+
+                StringBuilder sql = new StringBuilder();
+                sql.Append("SELECT * FROM [SHOES].[dbo].[Order] where ID=" + orderid); // 查询语句
+
+                SqlDataAdapter myda = new SqlDataAdapter(sql.ToString(), conn); // 实例化适配器
+                myda.Fill(dt); // 保存数据 
+                conn.Close(); // 关闭数据库连接
+            }
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                var item = dt.Rows[0];
+                var detail = new OrderDetail
+                {
+                    ID = item["ID"].ToString(),
+                    ProductID = item["ProductID"].ToString(),
+                    ProductName = item["ProductName"].ToString(),
+                    UnitPrice = decimal.Parse(item["UnitPrice"].ToString()),
+                    ReceivePhone = item["ReceivePhone"].ToString(),
+                    ReceiveAddress = item["ReceiveAddress"].ToString(),
+                    ReceiveName = item["ReceiveName"].ToString(),
+                    Color = item["Color"].ToString(),
+                    Size = item["Size"].ToString(),
+                    PayType = short.Parse(item["PayType"].ToString()),
+                    Remarks = item["Remarks"].ToString(),
+                    ReceiveCityID = item["ReceiveCityID"].ToString(),
+                    CreateUser = item["CreateUser"].ToString(),
+                    UpdateUser = item["UpdateUser"].ToString(),
+                    UpdateTime = DateTime.Parse(item["UpdateTime"].ToString()),
+                    CreateTime = DateTime.Parse(item["CreateTime"].ToString()),
+                    Count = int.Parse(item["Count"].ToString()),
+                    Status = short.Parse(item["Status"].ToString()),
+                    TotalPrice = string.IsNullOrEmpty(item["TotalPrice"].ToString()) ? decimal.Parse("0") : decimal.Parse(item["TotalPrice"].ToString())
+                };
+                return Json(detail, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+
         public JsonResult UpdateOrderStatus(int status, string orderId)
         {
             var result = new { isSuccess = true, message = string.Empty };

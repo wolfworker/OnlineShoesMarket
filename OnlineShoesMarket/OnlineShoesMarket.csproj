@@ -213,6 +213,7 @@
     <Content Include="Content\mobile.js" />
     <Content Include="Content\modal-gloss.png" />
     <Content Include="Content\reveal.css" />
+    <Content Include="Content\select.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

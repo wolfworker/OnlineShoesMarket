@@ -84,6 +84,48 @@ namespace OnlineShoesMarket.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [ValidateInput(false)]
+        [HttpPost]
+        public JsonResult SaveInfo(Token entity)
+        {
+
+            if (entity == null || string.IsNullOrEmpty(entity.citoken))
+            {
+                return Json(new { isSuccess = false, message = "数据为空！" }, JsonRequestBehavior.AllowGet);
+            }
+            
+            var result = new object();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection())
+                {
+                    conn.ConnectionString = ConfigurationManager.AppSettings["connectionstring"];
+                    conn.Open(); // 打开数据库连接
+                    var excuteSql = $@"INSERT INTO [SHOES].[dbo].[ClientInfo]
+                                               ([ClientJson],[CreatedTime])
+                                         VALUES
+                                               ('" + entity.citoken + "','" + DateTime.Now + "')";
+
+                    SqlCommand cmd = new SqlCommand(excuteSql, conn);
+                    var count = cmd.ExecuteNonQuery();
+                    conn.Close(); // 关闭数据库连接
+                    if (count > 0)
+                    {
+                        result = new { isSuccess = true, message = string.Empty };
+                    }
+                    else
+                    {
+                        result = new { isSuccess = false, message = "服务器异常，请重试！" };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new { isSuccess = false, message = "处理异常:" + ex.Message };
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getcitoken()
         {
             var result = new testss { code = "1",message = "success",data=new Token { citoken = "1527928820-2346931945-5fc1382a20e950448328fa4891a585c3" } };

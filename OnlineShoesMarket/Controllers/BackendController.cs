@@ -17,6 +17,11 @@ namespace OnlineShoesMarket.Controllers
             return View();
         }
 
+        public ActionResult RecordList()
+        {
+            return View();
+        }
+
         public JsonResult GetOrderList(OrderRequest request)
         {
             DataTable dt = new DataTable(); // 实例化数据表
@@ -66,18 +71,6 @@ namespace OnlineShoesMarket.Controllers
                 {
                     result.Add(new OrderDetail
                     {
-                        //ID = item["ID"].ToString(),
-                        //ProductID = item["ProductID"].ToString(),
-                        //ProductName = item["ProductName"].ToString(),
-                        //UnitPrice = decimal.Parse(item["UnitPrice"].ToString()),
-                        //ReceivePhone = item["ReceivePhone"].ToString(),
-                        //ReceiveAddress = item["ReceiveAddress"].ToString(),
-                        //ReceiveName = item["ReceiveName"].ToString(),
-                        //CreateTime = DateTime.Parse(item["CreateTime"].ToString()),
-                        //Count = int.Parse(item["Count"].ToString()),
-                        //Status = short.Parse(item["Status"].ToString()),
-                        //TotalPrice = string.IsNullOrEmpty(item["TotalPrice"].ToString()) ? decimal.Parse("0") : decimal.Parse(item["TotalPrice"].ToString())
-
                          ID = item["ID"].ToString(),
                         ProductID = item["ProductID"].ToString(),
                         ProductName = item["ProductName"].ToString(),
@@ -153,6 +146,39 @@ namespace OnlineShoesMarket.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetRecordList()
+        {
+            DataTable dt = new DataTable(); // 实例化数据表
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationSettings.AppSettings["connectionstring"]; ;
+                conn.Open(); // 打开数据库连接
+
+                StringBuilder sql = new StringBuilder();
+                sql.Append("SELECT * FROM [SHOES].[dbo].[ClientInfo] where 1=1 "); // 查询语句
+
+                SqlDataAdapter myda = new SqlDataAdapter(sql.ToString(), conn); // 实例化适配器
+                myda.Fill(dt); // 保存数据 
+                conn.Close(); // 关闭数据库连接
+            }
+
+            var result = new List<ClientInfo>();
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    result.Add(new ClientInfo
+                    {
+                        ClientJson = item["ClientJson"].ToString(),
+                        CreatedTime = DateTime.Parse(item["CreatedTime"].ToString())
+                    });
+                }
+            }
+
+            var res = new testrecord { rows = result, total = result.Count };
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult UpdateOrderStatus(int status, string orderId)
         {
@@ -202,12 +228,27 @@ namespace OnlineShoesMarket.Controllers
         public string UpdateUser { get; set; }
     }
 
+
+    public class ClientInfo
+    {
+        public string ClientJson { get; set; }
+        public DateTime CreatedTime { get; set; }
+    }
+
     public class test
     {
         public int total;
 
         public List<OrderDetail> rows;
     }
+
+    public class testrecord
+    {
+        public int total;
+
+        public List<ClientInfo> rows;
+    }
+
 
     public class OrderRequest
     {

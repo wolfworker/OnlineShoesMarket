@@ -1,0 +1,79 @@
+﻿
+<link rel="stylesheet" href="~/Content/bootstrap-table.css">
+<link rel="stylesheet" href="~/Content/select.css">
+<script src="~/Content/bootstrap-table.js"></script>
+
+<div class="content" style="background-color:white;">
+    <div class="panel" style="margin-bottom: -53px;">
+        <span style="font-size: x-large;">
+            浏览记录:
+        </span>
+    </div>
+    <table id="example" class="display"></table>
+</div>
+
+<script>
+    function GetRecordList() {
+        $.ajax({
+            url: "GetRecordList",
+            dataType: "json",
+            success: function (data) {
+                $('#example').bootstrapTable('load', data.rows);
+                document.getElementsByName("toggle")[0].innerHTML = "切换";
+                $(".pull-right.search").css('width', '160px');
+            },
+            error: function (e) {
+            }
+        });
+    }
+
+    function timestampToTime(timestamp) {
+        var date = new Date(parseInt(timestamp.replace("/Date(", "").replace(")/", ""), 10));
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
+        h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
+        m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) + ':';
+        s = (date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds());
+        return Y + M + D + h + m + s;
+    }
+
+    $('#example').bootstrapTable({
+        pagination: true,
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100],
+        search: true,
+        striped: true,
+        showToggle: true,
+        //cardView: true,
+        columns: [
+            {
+                field: 'number',
+                title: '序号',
+                width: 5,
+                align: 'center',
+                switchable: false,
+                formatter: function (value, row, index) {
+                    var pageSize = $('#example').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+                    var pageNumber = $('#example').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+                    return pageSize * (pageNumber - 1) + index + 1;    //返回每条的序号： 每页条数 * （当前页 - 1 ）+ 序号
+                },
+                width: "5%"
+            },
+            {
+                field: 'ClientJson',
+                title: '客户端信息',
+            }, {
+                field: 'CreatedTime',
+                title: '浏览时间', formatter: function (value, row, index) {
+
+                    return timestampToTime(value);
+                },
+                width: "15%"
+            }]
+    });
+
+    GetRecordList();
+</script>

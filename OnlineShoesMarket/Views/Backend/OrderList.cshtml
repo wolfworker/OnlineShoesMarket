@@ -168,133 +168,6 @@
 </div>
 
 <script>
-
-    $(document).ready(function () {
-        $('#example').bootstrapTable({
-            pagination: true,
-            sidePagination: "client",
-            pageNumber: 1,
-            pageSize: 10,
-            pageList: [10, 25, 50, 100],
-            search: true,
-            striped: true,
-            showToggle: true,
-            columns: [
-                {
-                    field: 'number',
-                    title: '序号',
-                    width: 5,
-                    align: 'center',
-                    switchable: false,
-                    formatter: function (value, row, index) {
-                        var pageSize = $('#example').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
-                        var pageNumber = $('#example').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
-                        return pageSize * (pageNumber - 1) + index + 1;    //返回每条的序号： 每页条数 * （当前页 - 1 ）+ 序号
-                    }
-                },
-                {
-                    field: 'ReceiveName',
-                    title: '姓名'
-                }, {
-                    field: 'ReceivePhone',
-                    title: '手机'
-                }, {
-                    field: 'ReceiveCityID',
-                    title: '城市'
-                },
-                {
-                    field: 'Color',
-                    title: '颜色'
-                }, {
-                    field: 'Size',
-                    title: '尺码'
-                },
-                {
-                    field: 'Count',
-                    title: '数量'
-                }, {
-                    field: 'TotalPrice',
-                    title: '总价'
-                }, {
-                    field: 'CreateTime',
-                    title: '创建时间', formatter: function (value, row, index) {
-
-                        return timestampToTime(value);
-                    }
-                }, {
-                    field: 'Status',
-                    title: '状态',
-                    formatter: function (value, row, index) {
-
-                        return GetStatusDesc(value);
-                    }
-                }, {
-                    field: 'ID',
-                    title: '操作',
-                    formatter: function (value, row, index) {
-                        var status = '<button data-id=' + value + ' data-status=' + row.Status + ' data-toggle="modal" data-target="#myModal"' +
-                            'class = "updateStatus btn btn-default">更新</button >';
-                        var edit = '  <button data-id=' + value + ' data-toggle="modal" data-target="#detailModal"' +
-                            'class = "detail btn btn-default">详情</button > ';
-                        return status + edit;
-                    }
-                }],
-            success: function (data) {
-                debugger;
-            }
-        });
-
-        $("#btnUpdate").click(function () {
-
-            var id = $("#orderId").val();
-            var status = 0;
-            $($(".modal-body")[0].children).each(function (index, item) {
-
-                if (item.className.indexOf('btn-danger') > -1) {
-
-                    status = item.dataset.id;
-                    return;
-                }
-            });
-
-            var param = {};
-            param.status = status;
-            param.orderId = id;
-            $.ajax({
-                url: "UpdateOrderStatus",
-                data: param,
-                type: "post",
-                dataType: "json",
-                success: function (result) {
-
-                    alert("操作成功")
-                    window.location.reload();
-                }, error: function (ex) {
-
-                }
-            });
-        });
-
-        $(".statusClass").click(function () {
-
-            var self = this;
-            var modelClass = $(this.parentElement.children).each(function (index, item) {
-
-                $(item).removeClass();
-                if (self == item) {
-                    $(item).addClass("btn statusClass btn-lg btn-danger");
-                } else {
-                    $(item).addClass("btn statusClass");
-                }
-            });
-        });
-
-        $("#btnquery").click(function () {
-            GetOrderList();
-        });
-        GetOrderList();
-    });
-
     function GetOrderList() {
         var param = {};
         param.Size = $("#txtsize").val();
@@ -316,17 +189,15 @@
     }
 
     function BindTableBtnEvent() {
+        debugger;
         document.getElementsByName("toggle")[0].innerHTML = "切换";
         $(".pull-right.search").css('width', '160px');
         $(".updateStatus").click(function () {
-
             var self = this;
             $("#orderId").val(this.dataset.id);
             $("#status").val(this.dataset.status);
             $($(".modal-body")[0].children).each(function (index, item) {
-
                 if (item.dataset.id == self.dataset.status) {
-
                     $(item).removeClass();
                     $(item).addClass("btn statusClass btn-lg btn-danger");
                     return;
@@ -353,7 +224,6 @@
     }
 
     function GetStatusDesc(status) {
-
         //订单状态 1:已下单  2:已发货  3:已付款  4:已完成  5:其他
         var statusDesc = '未知';
         switch (status) {
@@ -374,7 +244,6 @@
     }
 
     function timestampToTime(timestamp) {
-
         var date = new Date(parseInt(timestamp.replace("/Date(", "").replace(")/", ""), 10));
         Y = date.getFullYear() + '-';
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
@@ -385,4 +254,124 @@
         return Y + M + D + h + m + s;
     }
 
+    GetOrderList();
+
+    $('#example').bootstrapTable({
+        pagination: true,
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100],
+        search: true,
+        striped: true,
+        showToggle: true,
+        //cardView: true,     
+        columns: [
+            {
+                field: 'number',
+                title: '序号',
+                width: 5,
+                align: 'center',
+                switchable: false,
+                formatter: function (value, row, index) {
+                    var pageSize = $('#example').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+                    var pageNumber = $('#example').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+                    return pageSize * (pageNumber - 1) + index + 1;    //返回每条的序号： 每页条数 * （当前页 - 1 ）+ 序号
+                }
+            },
+            {
+                field: 'ReceiveName',
+                title: '姓名'
+            }, {
+                field: 'ReceivePhone',
+                title: '手机'
+            }, {
+                field: 'ReceiveCityID',
+                title: '城市'
+            },
+            {
+                field: 'Color',
+                title: '颜色'
+            }, {
+                field: 'Size',
+                title: '尺码'
+            },
+            {
+                field: 'Count',
+                title: '数量'
+            }, {
+                field: 'TotalPrice',
+                title: '总价'
+            }, {
+                field: 'CreateTime',
+                title: '创建时间', formatter: function (value, row, index) {
+
+                    return timestampToTime(value);
+                }
+            }, {
+                field: 'Status',
+                title: '状态',
+                formatter: function (value, row, index) {
+
+                    return GetStatusDesc(value);
+                }
+            }, {
+                field: 'ID',
+                title: '操作',
+                formatter: function (value, row, index) {
+                    var status = '<button data-id=' + value + ' data-status=' + row.Status + ' data-toggle="modal" data-target="#myModal"' +
+                        'class = "updateStatus btn btn-default">更新</button >';
+                    var edit = '  <button data-id=' + value + ' data-toggle="modal" data-target="#detailModal"' +
+                        'class = "detail btn btn-default">详情</button > ';
+                    return status + edit;
+                }
+            }]
+    });
+
+    $("#btnUpdate").click(function () {
+        var id = $("#orderId").val();
+        var status = 0;
+        $($(".modal-body")[0].children).each(function (index, item) {
+            if (item.className.indexOf('btn-danger') > -1) {
+                status = item.dataset.id;
+                return;
+            }
+        });
+
+        var param = {};
+        param.status = status;
+        param.orderId = id;
+        $.ajax({
+            url: "UpdateOrderStatus",
+            data: param,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                alert("操作成功")
+                window.location.reload();
+            }, error: function (ex) {
+
+            }
+        });
+    });
+
+    $(".statusClass").click(function () {
+        var self = this;
+        var modelClass = $(this.parentElement.children).each(function (index, item) {
+            $(item).removeClass();
+            if (self == item) {
+                $(item).addClass("btn statusClass btn-lg btn-danger");
+            } else {
+                $(item).addClass("btn statusClass");
+            }
+        });
+    });
+
+    $("#btnquery").click(function () {
+        GetOrderList();
+    });
+
+    document.getElementsByName("toggle")[0].onclick = function () {
+        BindTableBtnEvent();
+    };
 </script>

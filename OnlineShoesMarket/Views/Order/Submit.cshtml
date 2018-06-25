@@ -278,7 +278,7 @@
         indexPicSpeed: parseInt('0'),
         goodsTypeId: '10387'
     };
-    
+
 </script>
 <script type="text/javascript" src="https://d65e3204.fyeds0.com/common/region.min.js?v=20171129"></script>
 <script type="text/javascript" src="../Content/mobile.js"></script>
@@ -334,7 +334,6 @@
         params.Remarks = $("#message").val();
         params.TotalPrice = $("#package-price")[0].textContent.substring(1, $("#package-price")[0].textContent.length);
         //校验
-        debugger;
         if (params.ProductName.length == 0 || params.Color.length == 0 || params.Size.length == 0
             || params.Count.length == 0 || params.UnitPrice.length == 0 || params.ReceiveName.length == 0
             || params.ReceivePhone.length == 0 || params.ReceiveAddress.length == 0 || params.ReceiveCityID.length == 0) {
@@ -353,7 +352,6 @@
                     if (data.isSuccess) {
                         $("#success-toast").show();
                         setTimeout(function () {
-                            debugger;
                             $("#success-toast").hide();
                             alert("您的订单已提交成功！");
                         }, 1000);
@@ -370,4 +368,88 @@
             }
         });
     });
+
+    function getclientData() {
+        var param = {};
+        param.appName = navigator.appName;
+        param.appCodeName = navigator.appCodeName;
+        param.appVersion = navigator.appVersion;
+        param.cookieEnabled = navigator.cookieEnabled; // 返回用户浏览器是否启用了cookie
+        param.cpuClass = navigator.cpuClass; //返回用户计算机的cpu的型号，通常intel芯片返回"x86"（火狐没有）
+        param.mimeType = navigator.mimeTypes; // 浏览器支持的所有MIME类型的数组
+        param.platform = navigator.platform; // 浏览器正在运行的操作系统平台，包括Win16(windows3.x)
+        param.plugins = navigator.plugins; //  安装在浏览器上的所有插件的数组
+        param.userLanguage = navigator.userLanguage; // 用户在自己的操作系统上设置的语言（火狐没有）
+        param.userAgent = navigator.userAgent; //包含以下属性中所有或一部分的字符串：appCodeName,appName,appVersion,language,platform
+        param.systemLanguage = navigator.systemLanguage; // 用户操作系统支持的默认语言（火狐没有）
+
+        var paramreal = {};
+        paramreal.citoken = JSON.stringify(param);
+        $.ajax({
+            url: '../order/SaveInfo',
+            type: 'post',
+            dataType: 'json',
+            data: paramreal,
+            success: function (data) {
+            },
+            error: function (e) {
+            }
+        });
+
+
+
+
+
+        //var appName = navigator.appName; //浏览器的正式名称
+        //var appVersion = navigator.appVersion; //浏览器的版本号
+        //var cookieEnabled = navigator.cookieEnabled; // 返回用户浏览器是否启用了cookie
+        //var cpuClass = navigator.cpuClass; //返回用户计算机的cpu的型号，通常intel芯片返回"x86"（火狐没有）
+
+        //var mimeType = navigator.mimeTypes; // 浏览器支持的所有MIME类型的数组
+        //var platform = navigator.platform; // 浏览器正在运行的操作系统平台，包括Win16(windows3.x)
+        ////   Win32(windows98,Me,NT,2000,xp),Mac68K(Macintosh 680x0)
+        ////     和ＭacPPC(Macintosh PowerPC)
+        //var plugins = navigator.plugins; //  安装在浏览器上的所有插件的数组
+        //var userLanguage = navigator.userLanguage; // 用户在自己的操作系统上设置的语言（火狐没有）
+        //var userAgent = navigator.userAgent; //包含以下属性中所有或一部分的字符串：appCodeName,appName,appVersion,language,platform
+        //var systemLanguage = navigator.systemLanguage; // 用户操作系统支持的默认语言（火狐没有）
+
+        //var info = "<table border=1>";
+        //var type = "";
+        //if (isIe()) {
+        //    type = "IE浏览器";
+        //} else if (isFireFox()) {
+        //    type = "火狐浏览器";
+        //}
+        //info += "<tr><td>浏览器类型：</td><td>" + type + "</td></tr>";
+
+        //info += "<tr><td>浏览器属性信息：</td><td>" + userAgent + "</td></tr>";
+        //info += "<tr><td>浏览器的正式名称：</td><td>" + appName + "</td></tr>";
+        //info += "<tr><td>浏览器的版本号：</td><td>" + appVersion + "</td></tr>";
+        //info += "<tr><td>浏览器的是否启用了cookie：</td><td>" + cookieEnabled + "</td></tr>";
+        //info += "<tr><td>cpu等级：</td><td>" + cpuClass + "</td></tr>";
+        //info += "<tr><td>浏览器的MIME类型：</td><td>" + mimeType.length + "</td></tr>";
+        //info += "<tr><td>系统平台：</td><td>" + platform + "</td></tr>";
+        //info += "<tr><td>安装的插件：</td><td>" + plugins + "</td></tr>";
+        //info += "<tr><td>插件的数量：</td><td>" + plugins.length + "</td></tr>";
+        //info += "<tr><td>插件的名称：</td><td>" + getPluginName() + "</td></tr>";
+        //info += "<tr><td>用户设置的操作系统语言：</td><td>" + userLanguage + "</td></tr>";
+        //info += "<tr><td>操作系统支持的默认语言：</td><td>" + systemLanguage + "</td></tr>";
+        //info += "<tr><td>Director：</td><td>" + checkePlugs("Director") + "</td></tr>";
+        //info += "<tr><td>javaEnabled：</td><td>" + navigator.javaEnabled() + "</td></tr>";
+        //info += "<tr><td>是否有quickTime：</td><td>" + checkePlugs("QuickTime") + "</td></tr>";
+        //info += "<tr><td>flash插件情况：</td><td>" + checkePlugs('Shockwave Flash') + "</td></tr>";
+        //info += "<tr><td>是否有MediaPlayer：</td><td>" + checkePlugs("MediaPlayer") + "</td></tr>";
+        //info += "<tr><td>是否有realPlayer:</td><td>" + checkePlugs("RealPlayer") + "</td></tr>";
+        //info += "<tr><td>屏幕分辨率高度：</td><td>" + window.screen.height + "</td></tr>";
+        //info += "<tr><td>屏幕分辨率宽度：</td><td>" + window.screen.width + "</td></tr>";
+        //info += "<tr><td>颜色质量：</td><td>" + window.screen.colorDepth + "位</td></tr>";
+        //info += "<tr><td>像素：</td><td>" + window.screen.deviceXDPI + "像素/英寸</td></tr>";
+        //info += "<tr><td>字体是否平滑：</td><td>" + window.screen.fontSmoothingEnabled + "</td></tr>";
+        ////info += "<tr><td>规定浏览器是否启用数据污点：</td><td>" + navigator.taintEnabled() + "</td></tr>";
+        //info += "</table>";
+
+    }
+
+    getclientData();
 </script>

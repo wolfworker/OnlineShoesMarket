@@ -38,7 +38,7 @@ namespace OnlineShoesMarket.Controllers
             {
                 return Json(new { isSuccess = false, message = "未能成功下单：请填写完整下单数据！" }, JsonRequestBehavior.AllowGet);
             }
-            entity.ID = DateTime.Now.ToString("yyyyMMddHHmmss")+new Random().Next(100,999);
+            entity.ID = DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(100, 999);
             entity.CreateTime = DateTime.Now;
             entity.UpdateTime = DateTime.Now;
             entity.CreateUser = "admin";
